@@ -23,4 +23,3 @@ resource "docker_container" "registry" {
     external = 5000
   }
 }
-
