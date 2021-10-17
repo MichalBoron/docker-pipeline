@@ -20,7 +20,7 @@ resource "docker_image" "registry" {
 
 resource "docker_container" "registry" {
   image   = docker_image.registry.latest
-  name    = "RegistryContainer"
+  name    = "registrycontainer"
   restart = "always"
   networks_advanced {
     name = "simple_pipeline_network"
