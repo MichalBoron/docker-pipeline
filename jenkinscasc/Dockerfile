@@ -34,4 +34,6 @@ COPY jenkins-casc.yaml /usr/local/jenkins-casc.yaml
 # tell the jenkins config-as-code plugin where to find the yaml file
 ENV CASC_JENKINS_CONFIG /usr/local/jenkins-casc.yaml
 
-ENTRYPOINT sudo groupmod -g $(stat -c "%g" /var/run/docker.sock) docker && sudo chmod o+rw /var/run/docker.sock && /sbin/tini -- /usr/local/bin/jenkins.sh
+#ENTRYPOINT sudo groupmod -g $(stat -c "%g" /var/run/docker.sock) docker && sudo chmod o+rw /var/run/docker.sock && /sbin/tini -- /usr/local/bin/jenkins.sh
+ENTRYPOINT [ "/sbin/tini", "--"]
+CMD sudo groupmod -g $(stat -c "%g" /var/run/docker.sock) docker && sudo chmod o+rw /var/run/docker.sock && /usr/local/bin/jenkins.sh

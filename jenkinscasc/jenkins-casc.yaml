@@ -24,4 +24,17 @@ jenkins:
   
 # specify the seedjob groovy script that will create the pipelines for us
 jobs:
+  - script: >
+      multibranchPipelineJob('FlaskAppPipeline') {
+        branchSources {
+          git {
+            id = 'FlaskApp'
+            remote('http://GiteaContainer:3000/dev/FlaskApp.git')
+          }
+        }
+
+        triggers {
+          cron("H/5 * * * *")
+        }
+      }
   - file: /usr/local/seedjob.groovy

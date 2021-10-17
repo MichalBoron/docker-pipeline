@@ -1,6 +1,9 @@
 configuration-as-code
 job-dsl
 
+docker-commons
+docker-workflow
+
 blueocean
 workflow-job
 workflow-cps
