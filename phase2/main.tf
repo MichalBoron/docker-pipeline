@@ -17,7 +17,10 @@ resource "docker_image" "jcasc" {
 
 resource "docker_container" "jcasc" {
   image   = docker_image.jcasc.latest
-  name = "myjenkinstf"
+  name = "JenkinsContainer"
+  networks_advanced {
+    name = "simple_pipeline_network"
+  }
   ports {
     internal = 8080
     external = 8080
