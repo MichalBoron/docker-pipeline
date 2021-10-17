@@ -31,26 +31,6 @@ resource "docker_container" "registry" {
   }
 }
 
-# this image will be used as Jenkins agent to build docker containers
-resource "docker_image" "docker" {
-  name = "docker:latest"
-  keep_locally = false
-}
-
-resource "docker_container" "docker" {
-  image = docker_image.docker.latest
-  name = "DockerWorkerContainer"
-  restart = "always"
-  tty = true # prevent exiting after startup
-  networks_advanced {
-    name = "simple_pipeline_network"
-  }
-  volumes {
-    host_path = "/var/run/docker.sock"
-    container_path = "/var/run/docker.sock"
-  }
-}
-
 # git server
 resource "docker_image" "gitea" {
   name = "gitea/gitea"
