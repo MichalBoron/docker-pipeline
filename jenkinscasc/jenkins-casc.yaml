@@ -3,14 +3,15 @@ jenkins:
     local:
       allowsSignup: false
       users:
-        # create a user called admin
+        # create users admin and dev
         - id: "admin"
           password: "admin"
         - id: "dev"
-          password: "dev" # switch to using ${devpasswd}
+          password: "dev"
   authorizationStrategy: 
     globalMatrix:
       permissions:
+        # assign permissions
         - "Job/Build:dev"
         - "Job/Cancel:dev"
         - "Job/Read:dev"

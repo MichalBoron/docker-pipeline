@@ -10,18 +10,18 @@ terraform {
 provider "docker" {}
 
 resource "docker_image" "jenkins" {
-  name  = "localhost:5000/jenkins-custom"
+  name         = "localhost:5000/jenkins-custom"
   keep_locally = false
 }
 
 resource "docker_container" "jenkins" {
-  image   = docker_image.jenkins.latest
-  name = "jenkinsdc"
+  image = docker_image.jenkins.latest
+  name  = "jenkinsdc"
   networks_advanced {
     name = "simple_pipeline_network"
   }
   volumes {
-    host_path = "/var/run/docker.sock"
+    host_path      = "/var/run/docker.sock"
     container_path = "/var/run/docker.sock"
   }
   ports {

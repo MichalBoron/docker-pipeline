@@ -33,13 +33,13 @@ resource "docker_container" "registry" {
 
 # git server
 resource "docker_image" "gitea" {
-  name = "gitea/gitea"
+  name         = "gitea/gitea"
   keep_locally = false
 }
 
 resource "docker_container" "gitea" {
-  image = docker_image.gitea.latest
-  name = "giteadc"
+  image   = docker_image.gitea.latest
+  name    = "giteadc"
   restart = "always"
   networks_advanced {
     name = "simple_pipeline_network"
