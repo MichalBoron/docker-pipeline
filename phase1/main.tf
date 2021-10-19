@@ -52,4 +52,8 @@ resource "docker_container" "gitea" {
     internal = 22
     external = 222
   }
+
+  provisioner "local-exec" {
+    command = "bash provision_gitea.sh"
+  }
 }
