@@ -9,14 +9,14 @@ terraform {
 
 provider "docker" {}
 
-resource "docker_image" "dockerjcasc" {
-  name  = "localhost:5000/docker-and-jenkins-casc"
+resource "docker_image" "jenkins" {
+  name  = "localhost:5000/jenkins-custom"
   keep_locally = false
 }
 
-resource "docker_container" "dockerjcasc" {
-  image   = docker_image.dockerjcasc.latest
-  name = "JenkinsContainer"
+resource "docker_container" "jenkins" {
+  image   = docker_image.jenkins.latest
+  name = "jenkinsdc"
   networks_advanced {
     name = "simple_pipeline_network"
   }
@@ -29,4 +29,3 @@ resource "docker_container" "dockerjcasc" {
     external = 8080
   }
 }
-

@@ -20,7 +20,7 @@ resource "docker_image" "registry" {
 
 resource "docker_container" "registry" {
   image   = docker_image.registry.latest
-  name    = "registrycontainer"
+  name    = "registrydc"
   restart = "always"
   networks_advanced {
     name = "simple_pipeline_network"
@@ -39,7 +39,7 @@ resource "docker_image" "gitea" {
 
 resource "docker_container" "gitea" {
   image = docker_image.gitea.latest
-  name = "GiteaContainer"
+  name = "giteadc"
   restart = "always"
   networks_advanced {
     name = "simple_pipeline_network"

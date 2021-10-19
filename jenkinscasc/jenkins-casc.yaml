@@ -29,7 +29,7 @@ jobs:
         branchSources {
           git {
             id = 'FlaskApp'
-            remote('http://GiteaContainer:3000/dev/FlaskApp.git')
+            remote('http://giteadc:3000/dev/FlaskApp.git')
           }
         }
 
