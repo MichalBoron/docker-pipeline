@@ -9,7 +9,7 @@ terraform {
 
 provider "docker" {}
 
-resource "docker_network" "private_network" {
+resource "docker_network" "private" {
   name = "simple_pipeline_network"
 }
 
@@ -23,7 +23,7 @@ resource "docker_container" "registry" {
   name    = "registrydc"
   restart = "always"
   networks_advanced {
-    name = "simple_pipeline_network"
+    name = docker_network.private.name
   }
   ports {
     internal = 5000
@@ -42,7 +42,7 @@ resource "docker_container" "gitea" {
   name    = "giteadc"
   restart = "always"
   networks_advanced {
-    name = "simple_pipeline_network"
+    name = docker_network.private.name
   }
   ports {
     internal = 3000
