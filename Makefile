@@ -1,34 +1,36 @@
 SHELL := /bin/bash
+TFBASEDIR := terraform/base
+TFJENKINSDIR := terraform/jenkins
 
 .PHONY: all build plan prep apply apply1 apply2 destroy ask
 
 all: plan ask apply
 
 build:
-	@cd jenkinscasc && \
+	@cd config && \
 		docker build -t jenkins-custom:0.2 . && \
 		docker tag jenkins-custom:0.2 localhost:5000/jenkins-custom && \
 		docker push localhost:5000/jenkins-custom
 
 prep:
-	@cd phase1 && terraform init
-	@cd phase2 && terraform init
+	@cd $(TFBASEDIR) && terraform init
+	@cd $(TFJENKINSDIR) && terraform init
 
 plan: prep
-	@cd phase1 && terraform plan -out=tfplan
-	@cd phase2 && terraform plan -out=tfplan
+	@cd $(TFBASEDIR) && terraform plan -out=tfplan
+	@cd $(TFJENKINSDIR) && terraform plan -out=tfplan
 
 destroy: prep
-	@cd phase2 && terraform destroy
-	@cd phase1 && terraform destroy
+	@cd $(TFJENKINSDIR) && terraform destroy
+	@cd $(TFBASEDIR) && terraform destroy
 
 apply: apply1 build apply2
 
 apply1: prep
-	@cd phase1 && terraform apply tfplan
+	@cd $(TFBASEDIR) && terraform apply tfplan
 
 apply2: prep
-	@cd phase2 && terraform apply tfplan
+	@cd $(TFJENKINSDIR) && terraform apply tfplan
 
 ask:
 	@printf "\n\nProceed with these plans? Only 'yes' will be accepted to proceed.\n"
