@@ -14,7 +14,7 @@ resource "docker_network" "private_network" {
 }
 
 resource "docker_image" "registry" {
-  name         = "registry:latest"
+  name         = "registry:2.7.1"
   keep_locally = false
 }
 
@@ -33,7 +33,7 @@ resource "docker_container" "registry" {
 
 # git server
 resource "docker_image" "gitea" {
-  name         = "gitea/gitea"
+  name         = "gitea/gitea:1.15.4"
   keep_locally = false
 }
 
