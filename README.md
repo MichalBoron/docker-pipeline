@@ -1,4 +1,5 @@
 # docker-pipeline
+
 Demonstration of a simple CI/CD pipeline implemented with Terraform, Docker, Jenkins, and Gitea.
 
 This project creates infrastructure based on containers.
@@ -13,7 +14,28 @@ Linux OS, Docker Engine, containerd, Terraform version 1.0.9+
 
 ## Usage
 
-Run `make`, when prompted review plans and type `yes`.
+Makefile automates the process of setting up and tearing down the infrastructure. Possible targets:
+```
+all                            Automatically set up all components.
+destroyall                     Destroy all components.
+config                         Configure jenkins image and push to repository.
+prep                           Run terraform init in given subdirectory.
+plan                           Run terraform plan in given subdirectory, output to file tfplan.
+apply                          Run terraform apply (from file tfplan) in given subdirectory.
+destroy                        Run terraform destroy in given subdirectory.
+help                           Prints help for targets with comments
+```
+Examples of invocations:
+```
+make
+make all
+make destroyall
+make destroy jenkins
+make plan jenkins
+make apply jenkins
+```
+
+To set up all components run `make all`, when prompted review plans and type `yes`.
 
 Visit Gtiea instance at `localhost:3000` (credentials: dev / dev). Verify that FlaskApp repository was created.
 
@@ -26,8 +48,8 @@ Run the Flask application image with (note that port 5000 is already taken by th
 Verify that Flask is responding correctly by visiting `localhost:5555` in a browser.
 
 
-
 ## Step by step explanation
+
 Running `make` performs the following actions:
 1. Creates a private docker registry container (name: registrydc).
 2. Creates a container for Gitea git server (name: giteadc).
@@ -69,27 +91,9 @@ The `terraform/base` folder contains terraform configuration for local docker re
 The `terraform/jenkins` folder contains terraform configuration for jenkins container.
 Mounting `/var/run/docker.sock` (docker's UNIX socket) to the container enables Jenkins to run commands on docker instance of the host.
 
-Makefile automates the process of setting up and tearing down the infrastructure. Possible targets:
-```
-all                            Automatically set up all components.
-destroyall                     Destroy all components.
-config                         Configure jenkins image and push to repository.
-prep                           Run terraform init in given subdirectory.
-plan                           Run terraform plan in given subdirectory, output to file tfplan.
-apply                          Run terraform apply (from file tfplan) in given subdirectory.
-destroy                        Run terraform destroy in given subdirectory.
-help                           Prints help for targets with comments
-```
-Examples of invocations:
-```
-make
-make destroyall
-make destroy jenkins
-make plan jenkins
-make apply jenkins
-```
  
 ##  Other
+
 To access registry from remote hosts, it is necessary to add the registry host to `/etc/docker/daemon.json` (on the machine trying to access the registry).
 Below is an example of `/etc/docker/daemon.json`, assuming that the registry is running on host `192.168.1.123`, on port `5000`.
 ```JSON  
