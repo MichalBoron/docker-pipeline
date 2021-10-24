@@ -14,7 +14,7 @@ $(eval $(MAKECMDGOALS):;@:)
 # By default run init, then: plan, ask, and apply for each
 # terraform directory.
 # Execute config target at the right time.
-all: prep ## Automatically set up all components.
+all: ## Automatically set up all components.
 	$(MAKE) base
 	$(MAKE) config
 	$(MAKE) jenkins
@@ -35,7 +35,7 @@ endif
 # Then run plan, ask, and apply for that directory.
 FIRST_ARG := $(firstword $(MAKECMDGOALS))
 ifneq ($(filter $(DIRS), $(FIRST_ARG)),)
-$(eval $(FIRST_ARG): plan ask apply)
+$(eval $(FIRST_ARG): prep plan ask apply)
 endif
 
 define ask =
